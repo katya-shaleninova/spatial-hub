@@ -1,0 +1,10 @@
+#breadcrumb {
+    display: none !important;
+}
+footer.footer {
+    display: none !important;
+}
+.max-width {
+    max-width: 100% !important;
+    margin: 0 !important;
+}

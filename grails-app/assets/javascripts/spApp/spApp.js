@@ -352,14 +352,6 @@ resizeSouth = function (a, b, c) {
 };
 
 initLayoutContainer = function () {
-    if (!$SH.config.leftPanel) {
-        $('#right-panel')[0].style.marginLeft = "0px";
-        $('#left-panel')[0].style.marginLeft = "-420px";
-    } else {
-        $('#right-panel')[0].style.marginLeft = "420px";
-        $('#left-panel')[0].style.marginLeft = "0px";
-    }
-
     $(window).on("resize", function () {
         if ($('.ui-layout-container')[0]) {
             $SH.defaultPaneResizer = $('.ui-layout-container').layout({

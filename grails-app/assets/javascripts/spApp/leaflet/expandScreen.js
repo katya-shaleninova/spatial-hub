@@ -1,75 +1,42 @@
 L.Control.Expand = L.Control.extend({
     options: {
         position: 'topleft',
-        titleLeft: 'Expand Map Left',
-        titleRight: 'Expand Map Right',
-        titleUp: 'Expand Map Up',
-        titleDown: 'Expand Map Down',
-        toggleExpandLeft: null,
-        toggleExpandUp: null
     },
 
-    _up_state: false,
-    _left_state: false,
+    _collapsed: true,
 
     onAdd: function (map) {
         var container;
 
-        if (map.zoomControl) {
-            container = map.zoomControl._container;
-        } else {
-            container = L.DomUtil.create('div', 'leaflet-bar');
-        }
+        container = L.DomUtil.create('div', 'leaflet-bar');
 
         map.expandControl = this;
 
-        if ($SH.config.collapseUp) {
-            this.up = L.DomUtil.create('a', 'icon-expand-up', container);
-            this.up.href = '#';
-            this.up.title = this.options.titleUp;
-            L.DomEvent.addListener(this.up, 'click', L.DomEvent.stopPropagation)
-                .addListener(this.up, 'click', L.DomEvent.preventDefault)
-                .addListener(this.up, 'click', this._toggleUp, map);
+        if (this._collapsed) {
+            this.toggleButton = L.DomUtil.create('a', 'toggle-side-bar collapsed', container);
+        } else {
+            this.toggleButton = L.DomUtil.create('a', 'toggle-side-bar', container);
         }
-
-        if ($SH.config.collapseLeft) {
-            this._left_state = !$SH.config.leftPanel;
-            if (this._left_state) {
-                this.left = L.DomUtil.create('a', 'icon-expand-left icon-expand-right', container);
-            } else {
-                this.left = L.DomUtil.create('a', 'icon-expand-left', container);
-            }
-            this.left.href = '#';
-            this.left.title = this.options.titleLeft;
-            L.DomEvent.addListener(this.left, 'click', L.DomEvent.stopPropagation)
-                .addListener(this.left, 'click', L.DomEvent.preventDefault)
-                .addListener(this.left, 'click', this._toggleLeft, map);
-        }
+        this.toggleButton.href = '#';
+        this.toggleButton.title = this.options.titleLeft;
+        L.DomEvent.addListener(this.toggleButton, 'click', L.DomEvent.stopPropagation)
+            .addListener(this.toggleButton, 'click', L.DomEvent.preventDefault)
+            .addListener(this.toggleButton, 'click', this._toggle, map);
 
         return container;
     },
 
-    _toggleUp: function () {
-        if (this.expandControl._up_state) {
-            this.expandControl.up.title = this.expandControl.options.titleUp;
-            $(".icon-expand-up").removeClass("icon-expand-down")
-        } else {
-            this.expandControl.up.title = this.expandControl.options.titleDown;
-            $(".icon-expand-up").addClass("icon-expand-down")
-        }
-        this.expandControl.options.toggleExpandUp(this);
-        this.expandControl._up_state = !this.expandControl._up_state
-    },
+    _toggle: function () {
+        this.expandControl._collapsed = !this.expandControl._collapsed
 
-    _toggleLeft: function () {
-        if (this.expandControl._left_state) {
-            this.expandControl.left.title = this.expandControl.options.titleLeft;
-            $(".icon-expand-left").removeClass("icon-expand-right")
+        if (this.expandControl._collapsed) {
+            this.expandControl.toggleButton.title = this.expandControl.options.titleLeft;
+            this.expandControl.toggleButton.className = 'toggle-side-bar collapsed';
+            $("#left-panel").addClass("collapsed");
         } else {
-            this.expandControl.left.title = this.expandControl.options.titleRight;
-            $(".icon-expand-left").addClass("icon-expand-right")
+            this.expandControl.toggleButton.title = this.expandControl.options.titleRight;
+            this.expandControl.toggleButton.className = 'toggle-side-bar';
+            $("#left-panel").removeClass("collapsed");
         }
-        this.expandControl.options.toggleExpandLeft(this);
-        this.expandControl._left_state = !this.expandControl._left_state
     }
 });

@@ -1,39 +1,35 @@
-<div class="page-loading">
-    <div class="progress">
-        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="100"
-             aria-valuemin="0" aria-valuemax="100">
-            <span i18n="47" class="sr-only">Loading...</span>
-        </div>
-    </div>
-</div>
+<!--<div class="page-loading">-->
+<!--    <div class="progress">-->
+<!--        <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="100"-->
+<!--             aria-valuemin="0" aria-valuemax="100">-->
+<!--            <span i18n="47" class="sr-only">Loading...</span>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
-<div style="width:410px;margin-top:10px;padding-left:25px;overflow-y:auto;margin-left:-420px;"
-     ng-style="(panelMode[0] == 'default' && {'overflow-y':'visible'}) || {'overflow-y':'scroll'}"
-     class="pull-left"
-     ng-controller="LayoutCtrl" id="left-panel">
-
-    <div ng-show="panelMode[0] == 'default'">
+<div id="left-panel" class="collapsed pull-left" ng-controller="LayoutCtrl">
+    <div id="left-panel-expand-button" class="expand-button"><i class="fa fa-angles-left"></i></div>
+    <div class="left-panel-content" ng-show="panelMode[0] == 'default'">
         <div id="spMenu" sp-menu style="overflow-y:visible;overflow-x:visible"></div>
-        <div class="ui-layout-container" id="defaultPanel" style="height:500px;width:400px;margin-left:-15px;">
-            <div class="ui-layout-center ui-layout-pane ui-layout-pane-center">
-                <div class="row" sp-map style="margin-left:15px;margin-right: 0px;height:100%;"></div>
+        <div id="defaultPanel">
+            <div>
+                <div class="row" sp-map></div>
             </div>
 
-            <div class="ui-layout-south ui-layout-pane ui-layout-pane-south" name="divSelectedLayer" id="legend"
-                 ng-show="showOptions[0] || showLegend[0] !== false"
-                 style="display:block;overflow:hidden;background-color: #fff;height:100%">
-                <div class="col-md-12" style="padding-left:0px;padding-right:0px;height:100%;padding-bottom:10px">
-                    <div class="panel panel-default" style="overflow:hidden;height:100%">
-                        <div class="panel-heading">
-                            <i style="float:right" class="glyphicon glyphicon-menu-down"
-                               ng-click="toggleOptions(false)"></i>
+            <div name="divSelectedLayer" id="legend"
+                 ng-show="showOptions[0] || showLegend[0] !== false">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" ng-click="toggleOptions()">
+                            <i style="float:right" class="glyphicon glyphicon-menu-down"></i>
                             <h3 class="panel-title">
                                 <div i18n="155" ng-show="showOptions[0]">Map options</div>
-                                <div ng-show="showLegend[0] !== false" testTag="legendTitle">{{ showLegend[0].name}}</div>
+                                <div ng-show="showLegend[0] !== false" testTag="legendTitle">{{ showLegend[0].name}}
+                                </div>
                             </h3>
                         </div>
-                        <div class="panel-body" style="padding-left:5px;overflow:auto;height:100%;">
-                            <div sp-options ng-show="showOptions[0]" style="padding-right:15px"></div>
+                        <div class="panel-body">
+                            <div sp-options ng-show="showOptions[0]"></div>
                             <div sp-legend ng-show="showLegend[0] !== false"></div>
                         </div>
                     </div>
@@ -51,7 +47,7 @@
     <area-create style="height:500px;width:500px;"></area-create>
     <div class="row" style="margin:0px" ng-controller="LeafletMapController as leafletMapController">
         <leaflet id="map" lf-center="australia" layers="layers" controls="controls"
-                 bounds="bounds" defaults="defaults" width="100%" height="480px">
+                 bounds="bounds" defaults="defaults">
             <div class='alert alert-ala-danger alert-danger alert-dismissable hide' id='login-again-message'
                  role='alert'>
                 <div class="container">
@@ -95,8 +91,52 @@
                 </div>
 
             </div>
-            <leaflet-quick-links></leaflet-quick-links>
         </leaflet>
+    </div>
+</div>
+
+<!-- Quick links start-->
+<div class="quick-link-icons">
+    <div class="quick-link-icons-item">
+        <a href="#" ng-click="openTool('ToolAddSpeciesService')" alt="Add occurrences to map"
+           title="Add occurrences to map">
+            <div class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="32" height="32">
+                    <path d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
+                </svg>
+                <i class="fa fa-plus"/>
+            </div>
+        </a>
+    </div>
+    <div class="quick-link-icons-item">
+        <a href="#" ng-click="openModal('addArea')" alt="Add area to map" title="Add area to map">
+            <div class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="32" height="32">
+                    <path d="M368 80l32 0 0 32-32 0 0-32zM352 32c-17.7 0-32 14.3-32 32L128 64c0-17.7-14.3-32-32-32L32 32C14.3 32 0 46.3 0 64l0 64c0 17.7 14.3 32 32 32l0 192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32l192 0c0 17.7 14.3 32 32 32l64 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l0-192c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-64 0zM96 160c17.7 0 32-14.3 32-32l192 0c0 17.7 14.3 32 32 32l0 192c-17.7 0-32 14.3-32 32l-192 0c0-17.7-14.3-32-32-32l0-192zM48 400l32 0 0 32-32 0 0-32zm320 32l0-32 32 0 0 32-32 0zM48 112l0-32 32 0 0 32-32 0z"/>
+                </svg>
+                <i class="fa fa-plus"/>
+            </div>
+        </a>
+    </div>
+    <div class="quick-link-icons-item">
+        <a href="#" ng-click="openTool('ToolAddLayerService')" alt="Add layer to map" title="Add layer to map">
+            <div class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="32" height="32">
+                    <path d="M264.5 5.2c14.9-6.9 32.1-6.9 47 0l218.6 101c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 149.8C37.4 145.8 32 137.3 32 128s5.4-17.9 13.9-21.8L264.5 5.2zM476.9 209.6l53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 277.8C37.4 273.8 32 265.3 32 256s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0l152-70.2zm-152 198.2l152-70.2 53.2 24.6c8.5 3.9 13.9 12.4 13.9 21.8s-5.4 17.9-13.9 21.8l-218.6 101c-14.9 6.9-32.1 6.9-47 0L45.9 405.8C37.4 401.8 32 393.3 32 384s5.4-17.9 13.9-21.8l53.2-24.6 152 70.2c23.4 10.8 50.4 10.8 73.8 0z"/>
+                </svg>
+                <i class="fa fa-plus"/>
+            </div>
+        </a>
+    </div>
+    <div class="quick-link-icons-item">
+        <a href="#" ng-click="openTool('ToolAddFacetService')" alt="Add facet to map" title="Add facet to map">
+            <div class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="32" height="32">
+                    <path d="M3.9 54.9C10.5 40.9 24.5 32 40 32l432 0c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9 320 448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6l0-79.1L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"/>
+                </svg>
+                <i class="fa fa-plus"/>
+            </div>
+        </a>
     </div>
 </div>
 <!--<http-ui></http-ui>-->

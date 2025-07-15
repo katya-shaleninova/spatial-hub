@@ -11,9 +11,12 @@
     <meta name="layout" content="${config.skin.layout}"/>
     <title>Spatial Portal | ${config.skin.orgNameLong}</title>
 
+    <asset:stylesheet href="application.css"/>
+    <asset:stylesheet href="vbp.css" />
     <g:if test="${hub != null}">
         <asset:stylesheet href="hub/${hub}.css"/>
     </g:if>
+
 </head>
 
 <body>

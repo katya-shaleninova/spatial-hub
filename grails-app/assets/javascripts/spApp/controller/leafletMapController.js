@@ -43,7 +43,6 @@
                         overlays: MapService.leafletLayers
                     },
                     controls: {
-                        draw: {}
                     },
                     defaults: {crs: $scope.getCRS(), zoomControl: false, zoomsliderControl: true}
                 });
@@ -652,8 +651,6 @@
 
                             var drawnItems = baselayers.overlays.draw;
 
-                            L.control.zoomslider({position: 'topleft'}).addTo(map);
-
                             L.control.scale({position: 'bottomright'}).addTo(map);
 
                             if ($SH.config.cursorCoordinates) {
@@ -662,22 +659,32 @@
                                 }).addTo(map);
                             }
 
-                            new L.Control.FullScreen({
-                                data: []
-                            }).addTo(map);
+                            var measureControl = new L.Control.Measure({
+                                position: 'bottomright',
+                                primaryLengthUnit: 'meters',
+                                secondaryLengthUnit: 'kilometers',
+                                primaryAreaUnit: 'sqmeters'
+                            });
+                            measureControl.addTo(map);
 
-                            if ($SH.config.collapseUp || $SH.config.collapseLeft) {
-                                new L.Control.Expand({
-                                    toggleExpandUp: $scope.toggleExpandUp,
-                                    toggleExpandLeft: $scope.toggleExpandLeft
-                                }).addTo(map);
-                            }
+                            L.control.zoomslider({position: 'bottomright'}).addTo(map);
 
-                            if ($SH.flickrUrl) {
-                                new L.Control.Images({
-                                    toggleImages: $scope.toggleImages
-                                }).addTo(map);
-                            }
+//                            new L.Control.FullScreen({
+//                                data: []
+//                            }).addTo(map);
+
+//                            if ($SH.config.collapseUp || $SH.config.collapseLeft) {
+//                                new L.Control.Expand({
+//                                    toggleExpandUp: null,
+//                                    toggleExpandLeft: $scope.toggleExpandLeft
+//                                }).addTo(map);
+//                            }
+
+//                            if ($SH.flickrUrl) {
+//                                new L.Control.Images({
+//                                    toggleImages: $scope.toggleImages
+//                                }).addTo(map);
+//                            }
 
                             // does not work with the current biocollect version
                             // if ($SH.biocollectUrl) {
@@ -686,13 +693,10 @@
                             //     }).addTo(map);
                             // }
 
-                            var measureControl = new L.Control.Measure({
-                                position: 'topleft',
-                                primaryLengthUnit: 'meters',
-                                secondaryLengthUnit: 'kilometers',
-                                primaryAreaUnit: 'sqmeters'
+                            $("#left-panel-expand-button").click(() => {
+                                $("#left-panel").toggleClass("collapsed");
                             });
-                            measureControl.addTo(map);
+
 
                             map.on('draw:created', function (e) {
                                 var layer = e.layer;

@@ -16,10 +16,6 @@
     <g:if test="${grailsApplication.config.fathomId != null && grailsApplication.config.fathomId != ''}">
         <script src="https://cdn.usefathom.com/script.js" data-site="${grailsApplication.config.fathomId}" defer></script>
     </g:if>
-
-
-    <asset:stylesheet href="vbp.css" />
-
 </head>
 
 <body class="${pageProperty(name: 'body.class')}" id="${pageProperty(name: 'body.id')}"

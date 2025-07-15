@@ -13,6 +13,8 @@
                 KeepAliveService.start();
             }
 
+             debugger;
+
             return {
                 scope: {},
                 templateUrl: '/spApp/mapContent.htm',
@@ -24,7 +26,9 @@
 
                     scope.sortingLog = [];
 
+                    debugger;
                     scope.addBWK = function() {
+                        debugger;
                         var layerId = $SH.bwk;
                         return scope.addLayer(layerId);
                     }
@@ -151,7 +155,9 @@
                             LayoutService.openModal(type, data)
                         };
 
+                    debugger;
                     scope.openTool = function (type) {
+                        debugger;
                         scope.openModal('tool', {processName: type})
                     };
 
